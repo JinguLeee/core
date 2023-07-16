@@ -29,4 +29,14 @@ public class ConfigurationSingletonTest {
         Assertions.assertThat(memberService.getMemberRepository()).isSameAs(memberRepository);
         Assertions.assertThat(orderService.getMemberRepository()).isSameAs(memberRepository);
     }
+
+    @Test
+    void configurationDeep() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        AppConfig bean = ac.getBean(AppConfig.class);
+
+        System.out.println("bean = " + bean.getClass()); // bean = class hello.core.AppConfig$$SpringCGLIB$$0
+        // AppConfig의 @Configuration 주석 처리시             bean = class hello.core.AppConfig => memberRepository 세 번 호출
+        // @Bean만 사용해도 스프링 빈으로 등록, 싱글톤은 보장하지 않음
+    }
 }

@@ -11,7 +11,7 @@ import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration  // 주석 처리시 call AppConfig.memberRepository 세 번 호출
 public class AppConfig {
 
     // @Bean -> memberService -> new MemoryMemberRepository()
