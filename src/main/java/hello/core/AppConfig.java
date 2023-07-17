@@ -4,7 +4,7 @@ import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImp;
+import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
@@ -20,7 +20,7 @@ public class AppConfig {
     @Bean   // 스프링컨테이너에 알아서 등록
     public MemberService memberService() {
         System.out.println("call AppConfig.memberService");
-        return new MemberServiceImp(memberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
