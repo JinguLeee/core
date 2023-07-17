@@ -12,11 +12,42 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    /*
+    * 1. 생성자 주입 -> 생성자 호출 시점에 딱 1번만 호출되는 것이 보장. 불변, 필수일 때
+    * 생성자가 하나만 있을 때는 @Autowired 생략 가능 (스프링 빈에만 해당)
+    * */
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        System.out.println("memberRepository = " + memberRepository);
+        System.out.println("discountPolicy = " + discountPolicy);
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+
+    /*
+     * 2. 수정자 주입(setter 주입) -> 선택, 변경일 때
+     * 선택적 : @Autowired(required = false) 로 지정
+     * */
+    //    private MemberRepository memberRepository;
+    //
+    //    @Autowired(required = false)
+    //    public void setMemberRepository(MemberRepository memberRepository) {
+    //        this.memberRepository = memberRepository;
+    //    }
+
+    /*
+     * 3. 필드 주입 -> 권장하지 않음. 외부에서 변경이 불가능해서 테스트 하기 힘듦
+     * */
+    // @Autowired private final MemberRepository memberRepository;
+
+    /*
+     * 4. 일반 메서드 주입 -> 잘 사용하지 않음
+     * */
+    //    private MemberRepository memberRepository;
+    //    @Autowired
+    //    public void init(MemberRepository memberRepository) {
+    //        this.memberRepository = memberRepository;
+    //    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
