@@ -1,14 +1,6 @@
 package hello.core.lifecycle;
 
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-
-/*
- * 1. 인터페이스 InitializingBean, DisposableBean
- * InitializingBean : afterPropertiesSet() 메서드로 초기화
- * DisposableBean : destroy() 메서드로 소멸
- */
-public class NetworkClient implements InitializingBean, DisposableBean {
+public class NetworkClient {
     private String url;
 
     public NetworkClient() {
@@ -33,15 +25,18 @@ public class NetworkClient implements InitializingBean, DisposableBean {
         System.out.println("close: " + url);
     }
 
-    @Override   // 초기화 콜백 : 의존관계 주입이 완료된 후 호출
-    public void afterPropertiesSet() throws Exception {
+    /*
+     * 2. 빈 등록 초기화, 소멸 메서드 지정
+     * @Bean(initMethod = "init", destroyMethod = "close") 처럼 초기화, 소멸 메서드를지정
+     * 메서드 이름을 자유롭게 지정
+     */
+    public void init() {
         System.out.println("NetworkClient.afterPropertiesSet");
         connect();
         call("초기화 연결 메세지");
     }
 
-    @Override   // 소멸전 콜백 : 빈이 소멸되기 직전에 호출
-    public void destroy() throws Exception {
+    public void close() {
         System.out.println("NetworkClient.destroy");
         disconnect();
     }
