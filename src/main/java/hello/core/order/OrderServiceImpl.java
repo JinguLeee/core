@@ -9,17 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
-
     /*
     * 1. 생성자 주입 -> 생성자 호출 시점에 딱 1번만 호출되는 것이 보장. 불변, 필수일 때
     * 생성자가 하나만 있을 때는 @Autowired 생략 가능 (스프링 빈에만 해당)
     * */
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println("memberRepository = " + memberRepository);
-        System.out.println("discountPolicy = " + discountPolicy);
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
@@ -28,12 +25,18 @@ public class OrderServiceImpl implements OrderService {
      * 2. 수정자 주입(setter 주입) -> 선택, 변경일 때
      * 선택적 : @Autowired(required = false) 로 지정
      * */
-    //    private MemberRepository memberRepository;
+    //        private MemberRepository memberRepository;
+    //        private DiscountPolicy discountPolicy;
     //
-    //    @Autowired(required = false)
-    //    public void setMemberRepository(MemberRepository memberRepository) {
-    //        this.memberRepository = memberRepository;
-    //    }
+    //        @Autowired
+    //        public void setMemberRepository(MemberRepository memberRepository) {
+    //            this.memberRepository = memberRepository;
+    //        }
+    //
+    //        @Autowired
+    //        public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+    //            this.discountPolicy = discountPolicy;
+    //        }
 
     /*
      * 3. 필드 주입 -> 권장하지 않음. 외부에서 변경이 불가능해서 테스트 하기 힘듦
