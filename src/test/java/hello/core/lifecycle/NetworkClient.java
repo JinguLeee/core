@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 public class NetworkClient {
     private String url;
 
@@ -26,16 +29,19 @@ public class NetworkClient {
     }
 
     /*
-     * 2. 빈 등록 초기화, 소멸 메서드 지정
-     * @Bean(initMethod = "init", destroyMethod = "close") 처럼 초기화, 소멸 메서드를지정
-     * 메서드 이름을 자유롭게 지정
+     * 3. 애노테이션 @PostConstruct, @PreDestroy
+     * 스프링이 아닌 다른 컨테이너에서도 동작
+     * 유일한 단점은 외부 라이브러리에는 적용하지 못함
+     * 외부 라이브러리를 초기화, 종료 해야 하면 @Bean의 기능을 사용
      */
+    @PostConstruct
     public void init() {
         System.out.println("NetworkClient.afterPropertiesSet");
         connect();
         call("초기화 연결 메세지");
     }
 
+    @PreDestroy
     public void close() {
         System.out.println("NetworkClient.destroy");
         disconnect();
